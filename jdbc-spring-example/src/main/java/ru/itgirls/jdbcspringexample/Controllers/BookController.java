@@ -21,8 +21,8 @@ public class BookController {
         return bookRepository.findAllBooks();
     }
 
-    @GetMapping("/getbyId")
-    public Book getBookById(@RequestParam(value = "id", defaultValue = "1") Long id) {
+    @GetMapping("/book")
+    public Book getBookById(@RequestParam Long id) {
         return bookRepository.findBookById(id);
     }
 }
