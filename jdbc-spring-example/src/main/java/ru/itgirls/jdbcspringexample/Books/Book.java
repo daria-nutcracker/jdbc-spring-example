@@ -10,6 +10,11 @@ public class Book {
         this.id = id;
         this.name = name;
     }
+
+    public Book (Book book) {
+        this.id = book.id;
+        this.name = book.name;
+    }
     public Book () {}
 
     public void SetName (String name) {

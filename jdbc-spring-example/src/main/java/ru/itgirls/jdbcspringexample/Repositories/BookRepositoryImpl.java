@@ -5,12 +5,9 @@ import org.springframework.stereotype.Repository;
 
 import ru.itgirls.jdbcspringexample.Books.Book;
 
+import java.sql.*;
 import java.util.List;
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 
 @Repository
@@ -36,6 +33,30 @@ public class BookRepositoryImpl implements BookRepository{
             while (resultSet.next()) {
                 Book book = convertRowToBook (resultSet);
                 result.add(book);
+            }
+        }
+        catch (SQLException e) {
+            throw new IllegalStateException(e);
+        }
+        return result;
+    }
+
+    @Override
+    public Book findBookById(Long id) {
+        //сложим все книги
+        Book result = new Book() ;
+
+        //sql запрос
+        String SQL_findALLBooks = "select * from books where id=?;";
+
+        //connection to DB
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_findALLBooks)) {
+            statement.setLong(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+               // Book book = convertRowToBook (resultSet);
+                result = new Book(convertRowToBook (resultSet));
             }
         }
         catch (SQLException e) {

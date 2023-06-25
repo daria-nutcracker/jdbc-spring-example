@@ -1,5 +1,6 @@
 package ru.itgirls.jdbcspringexample.Controllers;
 
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.itgirls.jdbcspringexample.Repositories.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,8 +21,8 @@ public class BookController {
         return bookRepository.findAllBooks();
     }
 
-//    @GetMapping("/book/id")
-//    public List<Book> getBookById() {
-//        return bookRepository.findBookById();
-//    }
+    @GetMapping("/getbyId")
+    public Book getBookById(@RequestParam(value = "id", defaultValue = "1") Long id) {
+        return bookRepository.findBookById(id);
+    }
 }
